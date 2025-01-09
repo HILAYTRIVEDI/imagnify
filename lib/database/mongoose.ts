@@ -37,7 +37,8 @@ export const connectToDatabase = async () => {
         throw new Error('Please define the MONGODB_URL environment variable inside .env.local')
     }
 
-    cached.promise = cached.promise || mongoose.connect(MONGODB_URL, {
+
+    cached.promise =  mongoose.connect(MONGODB_URL, {
         dbName: 'imagnify',
         bufferCommands: false,
     })
