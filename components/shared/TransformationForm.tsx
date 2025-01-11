@@ -25,9 +25,11 @@ import
         SelectTrigger,
         SelectValue,
     } from "@/components/ui/select"
-import { useState } from "react"
-import { AspectRatioKey } from "@/lib/utils"
+import { startTransition, useState, useTransition } from "react"
+import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
 import { config } from "process"
+import { set } from "mongoose"
+import { updateCredits } from "@/lib/actions/user.actions"
 
 
 export const formSchema = z.object({
@@ -40,7 +42,7 @@ export const formSchema = z.object({
 
 const TransformationForm = ({ action, data= null, userId, type, creditBalance, config=null  }: TransformationFormProps) => {
 
-    const transformation = transformationTypes[type]
+    const transformationType = transformationTypes[type]
 
     const [image, setImage] = useState(false)
     const [newTransformation, setNewTransformation] = useState<Transformations | null>(null)
@@ -48,9 +50,7 @@ const TransformationForm = ({ action, data= null, userId, type, creditBalance, c
     const [isTransforming, setIsTransforming] = useState(false)
     const [transformationConfig, setTransformationConfig] = useState(config)
 
-    const onInputChangeHandler = ( fieldName:string, value:string, type:string, onChange:( (type:string) => void ) ) => {
-
-    }
+    const [isPending, setIsPending] = useTransition();
 
     const initialValues = data && action === "Update" ? {
         title: data?.title,
@@ -72,14 +72,50 @@ const TransformationForm = ({ action, data= null, userId, type, creditBalance, c
         console.log(values)
     }
 
-    const onTransformHandler = () =>{
-        // pass
+    // TODO: Implement the updateCredits function
+    const onTransformHandler = async () =>{
+        setIsTransforming(true)
+
+        setTransformationConfig(deepMergeObjects(newTransformation,transformationConfig))
+    
+        setNewTransformation(null)
+
+        startTransition( async () => {
+            // await updateCredits( userId, creditFee )
+        })
     }
 
-    const onSelectFieldHandler = (value:string , onChange:(value:string)=>void) =>
+    const onSelectFieldHandler = (value:string , onChangeField:(value:string)=>void) =>
     {
-        // Pass
+        const imageSize = aspectRatioOptions[value as AspectRatioKey]
+
+        setImage((prevState:any)=>({
+            ...prevState,
+            aspectRatio: imageSize.aspectRatio,
+            width: imageSize.width,
+            height: imageSize.height
+        }))
+
+        setNewTransformation(transformationType.config)
+
+        return onChangeField(value)
     }
+
+    const onInputChangeHandler = (fieldName: string, value: string, type: string, onChangeField: ((type: string) => void)) =>
+    {
+        debounce(()=>{
+            setNewTransformation((prevState: any) => ({
+                ...prevState,
+                [type]: {
+                    ...prevState?.[type],
+                    [ fieldName === 'prompt' ? 'prompt' : 'to']: value
+                }
+            }))
+
+            return onChangeField(value)
+        },1000)
+    }
+
 
     return (
         <Form {...form}>
