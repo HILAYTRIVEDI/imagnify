@@ -3,13 +3,13 @@ import { Document,model, models, Schema } from 'mongoose'
 // Declare the interface for the Image Schema
 export interface IImage extends Document {
     title: string;
-    transformation: string;
+    transformationType: string;
     publicId: string;
-    secutedUrl: string;
+    secureURL: string;
     width?: number;
     height?: number;
     config?: object;
-    transformationUrl?: URL;
+    transformationURL?: string;
     aspectRatio?: string;
     color?: string;
     promptUsed?: string;
@@ -28,7 +28,7 @@ const ImageSchema = new Schema({
         type: String,
         required: true
     },
-    transformation:{
+    transformationType:{
         type: String,
         required: true
     },
@@ -36,7 +36,7 @@ const ImageSchema = new Schema({
         type: String,
         required: true
     },
-    secutedUrl:{
+    secureURL:{
         type: String,
         required: true
     },
@@ -49,8 +49,8 @@ const ImageSchema = new Schema({
     config:{
         type: Object
     },
-    transformationUrl:{
-        type: URL
+    transformationURL:{
+        type: String
     },
     aspectRatio:{
         type: String
@@ -60,11 +60,6 @@ const ImageSchema = new Schema({
     },
     promptUsed:{
         type: String
-    },
-    autor:{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
     },
     createdAt:{
         type: Date,
