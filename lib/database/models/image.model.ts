@@ -1,3 +1,4 @@
+import { auth } from '@clerk/nextjs/server';
 import { Document,model, models, Schema } from 'mongoose'
 
 // Declare the interface for the Image Schema
@@ -68,6 +69,14 @@ const ImageSchema = new Schema({
     updatedAt:{
         type: Date,
         default: Date.now
+    },
+    author:{
+        type: {
+            _id: String,
+            firstName: String,
+            lastName: String
+        },
+        required: true
     }
 })
 
