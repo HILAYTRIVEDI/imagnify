@@ -272,7 +272,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                             {type === 'recolor' && (
                                 <CustomField
                                     control={form.control}
-                                    name="recolor"
+                                    name="color"
                                     formLabel="Replacement Color"
                                     className="w-full"
                                     render={({ field }) => (

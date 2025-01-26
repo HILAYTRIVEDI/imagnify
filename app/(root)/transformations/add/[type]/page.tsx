@@ -9,7 +9,11 @@ const AddTransformationTypePage = async ({params}:SearchParamProps) => {
 
   const { type } = await params;
 
-  const transformation = transformationTypes[type];
+  if (!Object.keys(transformationTypes).includes(type)) {
+    throw new Error(`Invalid transformation type: ${type}`);
+  }
+
+  const transformation = transformationTypes[type as keyof typeof transformationTypes];
   const { userId } = await auth();
   
   if (!userId) redirect('/sign-in');

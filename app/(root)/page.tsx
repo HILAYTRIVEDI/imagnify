@@ -4,12 +4,8 @@ import { getAllImage } from "@/lib/actions/image.actions"
 import Image from "next/image"
 import Link from "next/link"
 
-const Home = async ({ searchParams }: SearchParamProps) =>
+const Home = async () =>
 {
-  const page = Number(searchParams?.page) || 1;
-  const searchQuery = (searchParams?.query as string) || '';
-
-  const images = await getAllImage({ page, searchQuery })
 
   return (
     <>
@@ -31,15 +27,6 @@ const Home = async ({ searchParams }: SearchParamProps) =>
             </Link>
           ))}
         </ul>
-      </section>
-
-      <section className="sm:mt-12">
-        <Collection
-          hasSearch={true}
-          images={images?.data}
-          totalPages={images?.totalPages}
-          page={page}
-        />
       </section>
     </>
   )
