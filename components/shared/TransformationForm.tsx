@@ -235,6 +235,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                             render={({ field }) => (
                                 <Select
                                     onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}
+                                    value={field.value}
                                 >
                                     <SelectTrigger className="select-fill">
                                         <SelectValue placeholder="Select Size" />
