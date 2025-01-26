@@ -7,6 +7,8 @@ import Link from "next/link"
 const Home = async () =>
 {
 
+  const images = await getAllImage({ limit: 9, page: 1, searchQuery: '' })
+
   return (
     <>
       <section className="home">
@@ -27,6 +29,9 @@ const Home = async () =>
             </Link>
           ))}
         </ul>
+      </section>
+      <section className="mt-8">
+        <Collection images={images?.data || []} />
       </section>
     </>
   )

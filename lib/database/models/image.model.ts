@@ -1,86 +1,43 @@
-import { auth } from '@clerk/nextjs/server';
-import { Document,model, models, Schema } from 'mongoose'
+import { Document, Schema, model, models } from "mongoose";
 
-// Declare the interface for the Image Schema
 export interface IImage extends Document {
-    title: string;
-    transformationType: string;
-    publicId: string;
-    secureURL: string;
-    width?: number;
-    height?: number;
-    config?: object;
-    transformationURL?: string;
-    aspectRatio?: string;
-    color?: string;
-    promptUsed?: string;
-    author: {
-        _id: string;
-        firstName: string;
-        lastName: string;
-    };
-    createdAt?: Date;
-    updatedAt?: Date;
+  title: string;
+  transformationType: string;
+  publicId: string;
+  secureURL: string; 
+  width?: number;
+  height?: number;
+  config?: object; 
+  transformationUrl?: string; 
+  aspectRatio?: string;
+  color?: string;
+  prompt?: string;
+  author: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+  }
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-// Declare the Image Schema
 const ImageSchema = new Schema({
-    title:{
-        type: String,
-        required: true
-    },
-    transformationType:{
-        type: String,
-        required: true
-    },
-    publicId:{
-        type: String,
-        required: true
-    },
-    secureURL:{
-        type: String,
-        required: true
-    },
-    width:{
-        type: Number
-    },
-    height:{
-        type: Number
-    },
-    config:{
-        type: Object
-    },
-    transformationURL:{
-        type: String
-    },
-    aspectRatio:{
-        type: String
-    },
-    color:{
-        type: String
-    },
-    promptUsed:{
-        type: String
-    },
-    createdAt:{
-        type: Date,
-        default: Date.now
-    },
-    updatedAt:{
-        type: Date,
-        default: Date.now
-    },
-    author:{
-        type: {
-            _id: String,
-            firstName: String,
-            lastName: String
-        },
-        required: true
-    }
-})
+  title: { type: String, required: true },
+  transformationType: { type: String, required: true },
+  publicId: { type: String, required: true },
+  secureURL: { type: String, required: true },
+  width: { type: Number },
+  height: { type: Number },
+  config: { type: Object },
+  transformationUrl: { type: String },
+  aspectRatio: { type: String },
+  color: { type: String },
+  prompt: { type: String },
+  author: { type: Schema.Types.ObjectId, ref: 'User' },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+});
 
-// Construct the Image Model
-const Image = models?.Image || model<IImage>('Image', ImageSchema)
+const Image = models?.Image || model('Image', ImageSchema);
 
-export default Image
+export default Image;

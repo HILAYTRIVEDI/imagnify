@@ -25,19 +25,9 @@ export const navLinks = [
     icon: "/assets/icons/filter.svg",
   },
   {
-    label: "Background Remove",
-    route: "/transformations/add/removeBackground",
-    icon: "/assets/icons/camera.svg",
-  },
-  {
     label: "Profile",
     route: "/profile",
     icon: "/assets/icons/profile.svg",
-  },
-  {
-    label: "Buy Credits",
-    route: "/credits",
-    icon: "/assets/icons/bag.svg",
   },
 ];
 

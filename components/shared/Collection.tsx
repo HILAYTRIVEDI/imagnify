@@ -28,12 +28,18 @@ export const Collection = ({
 }: {
     images: IImage[];
     totalPages?: number;
-    page: number;
+    page?: number;
     hasSearch?: boolean;
 }) =>
 {
     const router = useRouter();
     const searchParams = useSearchParams();
+
+    // If page is not provided, set it to 1
+    if (!page)
+    {
+        page = 1;
+    }
 
     // PAGINATION HANDLER
     const onPageChange = (action: string) =>
