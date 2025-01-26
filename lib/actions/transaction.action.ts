@@ -8,7 +8,7 @@ import Transaction from '../database/models/transction.model';
 import { updateCredits } from './user.actions';
 
 export async function checkoutCredits(transaction: CheckoutTransactionParams) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
 
   const amount = Number(transaction.amount) * 100;
 
