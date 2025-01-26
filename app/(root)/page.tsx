@@ -5,7 +5,7 @@ import { Collection } from "@/components/shared/Collection";
 import { getAllImage } from "@/lib/actions/image.actions";
 
 // Home component with async server function
-const Home = async ({ searchParams }: { searchParams: { page?: string; query?: string } }) =>
+const Home = async ( { searchParams }: { searchParams: { page?: string; query?: string } }) =>
 {
   // Extract page and query with defaults
   const page = Number(searchParams?.page) || 1;
