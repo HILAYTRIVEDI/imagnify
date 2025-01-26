@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 
 import
@@ -18,10 +18,8 @@ import { formUrlQuery } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 
-import { Search } from "./Search";
 
 export const Collection = ({
-    hasSearch = false,
     images,
     totalPages = 1,
     page,
@@ -33,7 +31,6 @@ export const Collection = ({
 }) =>
 {
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     // If page is not provided, set it to 1
     if (!page)
@@ -41,25 +38,11 @@ export const Collection = ({
         page = 1;
     }
 
-    // PAGINATION HANDLER
-    const onPageChange = (action: string) =>
-    {
-        const pageValue = action === "next" ? Number(page) + 1 : Number(page) - 1;
-
-        const newUrl = formUrlQuery({
-            searchParams: searchParams.toString(),
-            key: "page",
-            value: pageValue,
-        });
-
-        router.push(newUrl, { scroll: false });
-    };
 
     return (
         <>
             <div className="collection-heading">
                 <h2 className="h2-bold text-dark-600">Recent Edits</h2>
-                {hasSearch && <Search />}
             </div>
 
             {images?.length > 0 ? (
@@ -80,7 +63,6 @@ export const Collection = ({
                         <Button
                             disabled={Number(page) <= 1}
                             className="collection-btn"
-                            onClick={() => onPageChange("prev")}
                         >
                             <PaginationPrevious className="hover:bg-transparent hover:text-white" />
                         </Button>
@@ -91,7 +73,6 @@ export const Collection = ({
 
                         <Button
                             className="button w-32 bg-purple-gradient bg-cover text-white"
-                            onClick={() => onPageChange("next")}
                             disabled={Number(page) >= totalPages}
                         >
                             <PaginationNext className="hover:bg-transparent hover:text-white" />
