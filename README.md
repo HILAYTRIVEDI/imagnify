@@ -21,7 +21,7 @@ Here're some of the project's best features:
 <p>1. Clone the repo</p>
 
 ```
-git clone repo_name
+git clone https://github.com/HILAYTRIVEDI/imagnify.git
 ```
 
 <p>2. Install depedencies</p>
